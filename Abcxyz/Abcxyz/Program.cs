@@ -20,7 +20,7 @@ public class Program {
             Title = "Hello world!",
             API = GraphicsAPI.Default with {
                 API = ContextAPI.OpenGL,
-                Version = new APIVersion(3,3)
+                Version = new APIVersion(4, 6)
             }
         };
         _window = Window.Create(opt);
@@ -37,11 +37,11 @@ public class Program {
         _vao = _gl.GenVertexArray();
         _gl.ClearColor(Color.FromArgb(_random.Next(256), _random.Next(256), _random.Next(256), _random.Next(256)));
         _gl.BindVertexArray(_vao);
-        float[] vertices = {
+        float[] vertices = [
             -0.981f, 0.998f, 0.0f,
             0.9f, -0.9f, 0.0f,
             0.1f, -0.89f, 0.0f
-        };
+        ];
         _vbo = _gl.GenBuffer();
         _gl.BindBuffer(BufferTargetARB.ArrayBuffer, _vbo);
         fixed (float* buf = vertices)
@@ -56,14 +56,14 @@ public class Program {
             _gl.BufferData(BufferTargetARB.ElementArrayBuffer, (nuint)(indices.Length * sizeof(uint)), buf,
                 BufferUsageARB.StaticDraw);
         const string vertexCode = @"
-#version 330
+#version 460
 layout (location = 0) in vec3 aPos;
 void main() {
     gl_Position = vec4(aPos, 1.0);
 }
 ";
         const string fragmentCode = @"
-#version 330 core
+#version 460
 out vec4 out_color;
 void main() {
     out_color = vec4(1.0, 0.5, 0.2, 1.0);
